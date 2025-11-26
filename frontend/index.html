@@ -3,35 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
+    <meta name="description" content="A simple and accessible Task Manager application.">
+    <title>Simple Task Manager</title>
     <link rel="stylesheet" href="task-styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
+    <header class="app-header">
         <h1>My Task Manager</h1>
-        
-        <!-- Task Input Form -->
-        <div class="task-input">
-            <input type="text" id="taskInput" placeholder="Enter a new task...">
-            <button id="addBtn" onclick="addTask()">Add Task</button>
-        </div>
-        <!-- Filter Buttons -->
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="active">Active</button>
-            <button class="filter-btn" data-filter="completed">Completed</button>
-        </div>
-        
-        <!-- Task List -->
-        <ul id="taskList" class="task-list"></ul>
-        
-        <!-- Statistics -->
-        <div class="stats">
-            <span id="totalTasks">0 tasks</span>
-            <span id="completedTasks">0 completed</span>
-        </div>
-    </div>
+    </header>
     
-    <script src="task-app.js"></script>
+    <main class="container">
+        
+        <form class="task-input" id="taskForm">
+            <label for="taskInput" class="sr-only">Enter a new task</label>
+            <input type="text" id="taskInput" placeholder="Enter a new task..." required aria-label="New Task Description">
+            <button type="submit" id="addBtn">Add Task</button>
+        </form>
+        
+        <nav class="filters" aria-label="Filter Tasks">
+            <button class="filter-btn active" data-status="all">All</button>
+            <button class="filter-btn" data-status="active">Active</button>
+            <button class="filter-btn" data-status="completed">Completed</button>
+        </nav>
+        
+        <ul id="taskList" class="tasks-list">
+            </ul>
+        
+        <footer class="stats">
+            <span aria-live="polite">
+                <strong id="totalTasks">0</strong> tasks total 
+            </span>
+            |
+            <span aria-live="polite">
+                <strong id="completedTasks">0</strong> completed
+            </span>
+            <button id="clearCompletedBtn" class="clear-btn" style="float: right;">Clear Completed</button>
+        </footer>
+    </main>
+    
+    <script src="task-app.js" defer></script>
 </body>
 </html>
