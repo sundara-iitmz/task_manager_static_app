@@ -1,23 +1,28 @@
+/* Universal Reset and Box Model */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Updated gradient for a softer feel */
+    background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
     min-height: 100vh;
     padding: 20px;
 }
 
+/* Container and Header */
 .container {
     max-width: 600px;
     margin: 0 auto;
     background: white;
     border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    /* Slightly less aggressive shadow */
+    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
 }
 
 h1 {
@@ -27,6 +32,20 @@ h1 {
     font-size: 32px;
 }
 
+/* Screen Reader Only Class (Accessibility) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Task Input Form Styling */
 .task-input {
     display: flex;
     gap: 10px;
@@ -39,28 +58,37 @@ h1 {
     border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #taskInput:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #74ebd5; /* Match new gradient color */
+    box-shadow: 0 0 0 3px rgba(116, 235, 213, 0.5); /* Focus ring */
 }
 
 #addBtn {
     padding: 12px 25px;
-    background: #667eea;
-    color: white;
+    background: #74ebd5; /* Match new gradient color */
+    color: #333;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 #addBtn:hover {
-    background: #5568d3;
+    background: #5fd3c0; /* Darker hover state */
+    transform: translateY(-1px);
+}
+
+/* Filter Buttons Styling (Now a <nav>) */
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px; /* Increased margin for separation */
 }
 
 .filter-btn {
@@ -70,33 +98,151 @@ h1 {
     background: white;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
     transition: all 0.3s;
 }
 
+.filter-btn:hover:not(.active) {
+    background: #f0f0f0;
+}
+
 .filter-btn.active {
-    background: #667eea;
+    background: #9face6; /* Match new gradient color */
     color: white;
-    border-color: #667eea;
+    border-color: #9face6;
+    box-shadow: 0 2px 5px rgba(159, 172, 230, 0.5);
 }
 
-.filters {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.task-list {
+/* Task List and Items */
+.tasks-list { /* Updated selector from .task-list to .tasks-list (as per HTML change) */
     list-style: none;
+    padding: 0;
     margin-bottom: 20px;
 }
 
 .task-item {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 15px;
-    background: #f8f9fa;
+    background: #fff; /* Keep background white for visibility */
     margin-bottom: 10px;
     border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Subtle shadow for lift */
     transition: all 0.3s;
+    border-left: 5px solid #9face6; /* Highlight active tasks */
+}
+
+/* Completed Task Styles */
+.task-item.completed {
+    background: #f0f8ff; /* Light blue background for completed */
+    border-left: 5px solid #ddd;
+    opacity: 0.7;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Task Text and Checkbox */
+.task-item input[type="checkbox"] {
+    /* Customizing checkbox appearance (optional, complex) */
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #9face6;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    margin-right: 10px;
+}
+
+.task-item input[type="checkbox"]:checked {
+    background-color: #9face6;
+    border-color: #9face6;
+}
+
+.task-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.task-text { /* New class for the span/label containing the task text */
+    flex-grow: 1;
+    font-size: 16px;
+    cursor: pointer; /* Suggests it's clickable (for editing) */
+    padding: 0 5px;
+}
+
+/* Task Actions (Edit/Delete buttons) */
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.edit-btn {
+    background: #ffc107;
+    color: #333;
+}
+
+.edit-btn:hover {
+    background: #e0ac00;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* Statistics and Footer */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 14px;
+}
+
+.stats strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Clear Completed Button */
+#clearCompletedBtn {
+    background: none;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+#clearCompletedBtn:hover {
+    background: #dc3545;
+    color: white;
 }
