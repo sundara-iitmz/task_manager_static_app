@@ -1,0 +1,22 @@
+{
+  "name": "task-manager-frontend",
+  "version": "1.0.0",
+  "description": "React Task Manager Application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["task", "manager", "react"],
+  "author": "Sundara Bharathi",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^7.2.4"
+  }
+}
