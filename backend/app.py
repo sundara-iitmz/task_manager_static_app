@@ -10,9 +10,15 @@ app = Flask(__name__)
 # Enable CORS for all routes to allow frontend to communicate
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# MySQL Database Configuration
-# Use environment variable if available (Docker), otherwise use localhost
+# Database Configuration
+# Use environment variable if available (Docker/Render), otherwise use localhost for MySQL
+# Supports both MySQL (local dev) and PostgreSQL (Render production)
 database_url = os.getenv('DATABASE_URL', 'mysql+pymysql://root:passw0rd@localhost:3308/app_db?charset=utf8mb4')
+
+# Fix SQLAlchemy 1.4+ compatibility with PostgreSQL URLs
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
