@@ -1,3 +1,32 @@
 .idea
 task_venv/
 *.xml
+
+# Environment files
+.env
+.env.local
+
+# Docker volumes
+mysql_data/
+
+# Backend
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/.pytest_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

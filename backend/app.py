@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from datetime import datetime
+import os
 """ author = Sundara Bharathi"""
 
 app = Flask(__name__)
@@ -10,9 +11,9 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # MySQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'mysql+pymysql://root:passw0rd@localhost:3308/app_db?charset=utf8mb4'
-)
+# Use environment variable if available (Docker), otherwise use localhost
+database_url = os.getenv('DATABASE_URL', 'mysql+pymysql://root:passw0rd@localhost:3308/app_db?charset=utf8mb4')
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -169,4 +170,6 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         print("[OK] Database tables created successfully!")
-    app.run(debug=True, port=5000)
+    # Run in debug mode only if not in production (Docker environment)
+    debug_mode = os.getenv('FLASK_ENV') == 'development'
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)
